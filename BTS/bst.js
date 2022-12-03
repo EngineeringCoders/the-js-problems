@@ -53,6 +53,139 @@ class Tree{
             }
         }
     }
+    //method to remove a node from our tree 
+    remove(data){
+        this.root = this.removeNode(this.root,data);
+    }
+    //method to decide which node to be removed
+    removeNode(node,data){
+        if(!node){
+            return null;
+        }
+        if(data<node.data){
+            node.left = this.removeNode(node.left,data);
+            return node;
+        }else if(data > node.data){
+            node.right = this.removeNode(node.right,data);
+        }else{
+            if(!node.left && !node.right){
+                node = null;
+                return node;
+            }
+            if(!node.left){
+                node = node.right;
+                return node;
+            }
+            if(!node.right){
+                node = node.left
+                return left;
+            }
+
+            let min = this.findMinNode(node.right);
+            node.data = min.data;
+            node.right = this.removeNode(node.right,min.data)
+            return node;
+        }
+    }
+
+    //Travering a BST
+    /**
+     * We can traverse the given BST in three ways ie  Inorder, Preorder, Postorder.
+     * 1. Inorder: 
+     *  If we want to flatten the tree back into it's original sequence then we make use of Inorder traversing technique
+     *  The order of nodes are 
+     *  - Left subtree
+     *  - Root node 
+     *  - Right subtree.
+     *  
+     */
+    //Inorder
+    inOrder(node){
+        if(node){
+            this.inOrder(node.left);
+            console.log(node.data);
+            this.inOrder(node.right);
+        }
+    }
+    /**
+     * The second way of traversing a give BST is PreOrder.
+     * In preorder we go through the roots before going to their childs.
+     * In this traversing we need to inspect roots before inspecting their leaves(childs).
+     * Preorder follows the given below hierarchy to traverse a given bst:
+     *  - Root node
+     *  - Left node
+     *  - Right node
+     */
+    //PreOrder
+    preOrder(node){
+        if(node){
+            console.log(node.data);
+            this.preOrder(node.left);
+            this.preOrder(node.right);
+        }
+    }
+    /**
+     * PostOrder:
+     * If we want to delete an entire tree, or simply want to inspect the leaves before inspecting the nodes.
+     * If we delete the root node, then we won't be able to delte the node in the right hand side.
+     */
+    //Postorder
+    postOrder(node){
+        if(node){
+            this.postOrder(node.left);
+            this.postOrder(node.right);
+            console.log(node.data);
+        }
+    }
+
+    //breath-first traversal of a tree
+    traverseBFS(){
+        //checking for first level of nodes
+        if(!this.root) return ;
+        //initilize a queue
+        this.queue = [];
+        //pushed first node ie root node into the queue
+        this.queue.push(this.root);
+        this.output = [];
+        while(this.queue.length){
+            //the last item in the given queue
+            const node = this.queue.shift();
+            //traversing one level of child starts
+            if(node.left){
+                this.queue.push(node.left);
+            }
+            if(node.right){
+                this.queue.push(node.right);
+            }
+            //traversing one level of child stop
+            this.output.push(node.data);
+
+        }
+        return this.output;
+    }
+
+    //Find the minimum and maximum 
+    /**
+     * Finding the max or min value of a bst is bit easier, as we already know
+     * that the left subtree's values are lower the the current node, and the right subtree's 
+     * values are higher than the current node.
+     */
+    getMin(){
+        let node = this.root;
+        while(node.left){
+            node = node.left;
+        }
+        return node.data;
+    }
+    //find max value of a bst
+    getMax(){
+        let node = this.root;
+        while(node.right){
+            node = node.right;
+        }
+        return node.data;
+    }
+
 }
 
 //Lets test our bst implementation
@@ -60,3 +193,7 @@ const testNode = new Tree();
 console.log(testNode.addNode(5));
 console.log(testNode.addNode(12));
 console.log(testNode.addNode(3));
+
+// write a program to check if a given number is divisible by 5.
+// if it is divisible by 5 then print 'chocolate'
+// if it is not divisible by 5 then print 'poison'
