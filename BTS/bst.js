@@ -185,7 +185,13 @@ class Tree{
         }
         return node.data;
     }
-
+    /**
+     * Time complexity of BST
+     * Average: 0(log(n)) -> The number of items is split in half, & we are able to decide either we
+     * need to go to left or right sub trees.
+     * Worst: o(n) --> If the tree is very unbalanced, it resembles a linked list.
+     * Worst space: The more items, the bigger the data list 
+     */
 }
 
 //Lets test our bst implementation
